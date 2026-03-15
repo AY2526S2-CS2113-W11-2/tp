@@ -1,0 +1,40 @@
+package seedu.duke.ui;
+
+import java.util.Scanner;
+
+import seedu.duke.module.Module;
+import seedu.duke.task.Task;
+
+public class Ui {
+    private final Scanner scanner;
+
+    public Ui(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public void showWelcome() {
+        System.out.println("Welcome to ModuleSync");
+        System.out.println("What would you like to do?");
+    }
+
+    public void showFarewell() {
+        System.out.println("Bye. Hope to see you again!");
+    }
+
+    public String readCommand() {
+        if (scanner.hasNextLine()) {
+            return scanner.nextLine();
+        }
+        return "bye";
+    }
+
+    public void showError(String message) {
+        System.out.println("Error: " + message);
+    }
+
+    public void showTaskAdded(Module module, Task task, int totalTasks) {
+        System.out.println("Added task under " + module.getCode() + ":");
+        System.out.println("  " + task.formatForList(module.getTasks().size()));
+        System.out.println("Now tracking " + totalTasks + " task(s) across modules.");
+    }
+}
