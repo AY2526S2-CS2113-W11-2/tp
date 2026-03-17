@@ -6,6 +6,7 @@ import java.util.Map;
 
 import seedu.duke.exception.ModuleSyncException;
 import seedu.duke.task.Task;
+import seedu.duke.task.TaskList;
 
 public class ModuleBook {
     private final Map<String, Module> modules = new LinkedHashMap<>();
@@ -37,6 +38,27 @@ public class ModuleBook {
                 }
                 currentIndex++;
             }
+        }
+
+        throw new ModuleSyncException("Task number does not exist: " + displayIndex);
+    }
+
+    public Task deleteTaskByDisplayIndex(int displayIndex) throws ModuleSyncException {
+        if (displayIndex <= 0) {
+            throw new ModuleSyncException("Task number must be a positive integer.");
+        }
+
+        int currentIndex = 1;
+
+        for (Module module : modules.values()) {
+            TaskList moduleTasks = module.getTasks();
+            int moduleSize = moduleTasks.size();
+
+            if (displayIndex < currentIndex + moduleSize) {
+                int localIndex = displayIndex - currentIndex;
+                return moduleTasks.delete(localIndex);
+            }
+            currentIndex += moduleSize;
         }
 
         throw new ModuleSyncException("Task number does not exist: " + displayIndex);

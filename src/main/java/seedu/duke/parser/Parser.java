@@ -6,6 +6,7 @@ import seedu.duke.command.ExitCommand;
 import seedu.duke.command.ListCommand;
 import seedu.duke.command.MarkCommand;
 import seedu.duke.command.UnmarkCommand;
+import seedu.duke.command.DeleteCommand;
 import seedu.duke.exception.ModuleSyncException;
 
 public class Parser {
@@ -28,6 +29,9 @@ public class Parser {
         }
         if (trimmed.toLowerCase().startsWith("unmark")) {
             return parseUnmark(trimmed);
+        }
+        if (trimmed.toLowerCase().startsWith("delete")) {
+            return parseDelete(trimmed);
         }
         throw new ModuleSyncException("Unknown command. Try: add /mod MOD /task TASK");
     }
@@ -72,6 +76,12 @@ public class Parser {
         return new UnmarkCommand(taskNumber);
     }
 
+    private Command parseDelete(String input) throws ModuleSyncException {
+        String remainder = input.length() > 6 ? input.substring(6).trim() : "";
+        int taskNumber = parseTaskNumber(remainder, "delete");
+        return new DeleteCommand(taskNumber);
+    }
+
     private int parseTaskNumber(String rawTaskNumber, String commandWord) throws ModuleSyncException {
         if (rawTaskNumber.isEmpty()) {
             throw new ModuleSyncException("Usage: " + commandWord + " TASK_NUMBER");
@@ -82,4 +92,5 @@ public class Parser {
             throw new ModuleSyncException("Task number must be a positive integer.");
         }
     }
+
 }

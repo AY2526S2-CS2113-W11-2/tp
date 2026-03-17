@@ -64,4 +64,8 @@ public class Ui {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println("  " + task.formatForList(taskNumber));
     }
+
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
 }
