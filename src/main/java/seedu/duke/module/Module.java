@@ -9,6 +9,7 @@ public class Module {
     private final TaskList taskList = new TaskList();
 
     public Module(String code) {
+        assert code != null && !code.trim().isEmpty() : "Module code must not be null or empty";
         this.code = code.toUpperCase();
     }
 
@@ -21,11 +22,12 @@ public class Module {
     }
 
     public Task addTodo(String description) throws ModuleSyncException {
+        assert taskList != null : "Task list must be initialized";
         return taskList.addTodo(code, description);
     }
 
     public Task addDeadline(String description, java.time.LocalDateTime by) throws ModuleSyncException {
+        assert taskList != null : "Task list must be initialized";
         return taskList.addDeadline(code, description, by);
     }
 }
-

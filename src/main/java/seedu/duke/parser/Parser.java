@@ -69,6 +69,8 @@ public class Parser {
         if (module == null || module.isEmpty() || task == null || task.isEmpty()) {
             throw new ModuleSyncException("Usage: add /mod MOD /task DESCRIPTION [/due YYYY-MM-DD]");
         }
+        assert module != null && !module.trim().isEmpty() : "Module code should be parsed for add command";
+        assert task != null && !task.trim().isEmpty() : "Task description should be parsed for add command";
 
         if (due != null && !due.isEmpty()) {
             try {
@@ -84,12 +86,15 @@ public class Parser {
                     java.time.LocalDate date = java.time.LocalDate.parse(due);
                     byDate = date.atTime(23, 59);
                 }
+                assert byDate != null : "Parsed deadline must not be null";
+                assert module != null && task != null : "Add deadline command requires parsed module and task";
                 return new AddDeadlineCommand(module, task, byDate);
             } catch (DateTimeParseException e) {
                 throw new ModuleSyncException("Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd-HHmm");
             }
         }
 
+        assert module != null && task != null : "Add todo command requires parsed module and task";
         return new AddTodoCommand(module, task);
     }
 
@@ -122,5 +127,3 @@ public class Parser {
         }
     }
 }
-
-

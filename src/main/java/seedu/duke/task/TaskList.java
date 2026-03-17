@@ -10,21 +10,28 @@ public class TaskList {
     private final List<Task> tasks = new ArrayList<>();
 
     public Task addTodo(String moduleCode, String description) throws ModuleSyncException {
+        assert moduleCode != null && !moduleCode.trim().isEmpty() : "Module code must be provided for todo";
+        int initialSize = tasks.size();
         if (description == null || description.trim().isEmpty()) {
             throw new ModuleSyncException("Task description cannot be empty.");
         }
         Task todo = new Todo(moduleCode, description.trim());
         tasks.add(todo);
+        assert tasks.size() == initialSize + 1 : "Task list size should increase after adding todo";
         return todo;
     }
 
     public Task addDeadline(String moduleCode, String description, 
                             java.time.LocalDateTime by) throws ModuleSyncException {
+        assert moduleCode != null && !moduleCode.trim().isEmpty() : "Module code must be provided for deadline";
+        assert by != null : "Deadline datetime must be provided";
+        int initialSize = tasks.size();
         if (description == null || description.trim().isEmpty()) {
             throw new ModuleSyncException("Task description cannot be empty.");
         }
         Task deadline = new Deadline(moduleCode, description.trim(), by);
         tasks.add(deadline);
+        assert tasks.size() == initialSize + 1 : "Task list size should increase after adding deadline";
         return deadline;
     }
 
@@ -48,4 +55,3 @@ public class TaskList {
         return tasks.remove(index);
     }
 }
-

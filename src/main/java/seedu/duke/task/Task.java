@@ -6,6 +6,8 @@ public abstract class Task {
     private boolean isDone;
 
     protected Task(String moduleCode, String description, boolean isDone) {
+        assert moduleCode != null && !moduleCode.trim().isEmpty() : "Module code must not be null or empty";
+        assert description != null && !description.trim().isEmpty() : "Task description must not be null or empty";
         this.moduleCode = moduleCode;
         this.description = description;
         this.isDone = isDone;
@@ -55,4 +57,3 @@ public abstract class Task {
                 + description;
     }
 }
-

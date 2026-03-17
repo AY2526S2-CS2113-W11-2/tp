@@ -28,4 +28,3 @@ public class AddDeadlineCommand extends Command {
         ui.showTaskAdded(module, task, moduleBook.totalTaskCount());
     }
 }
-
