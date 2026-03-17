@@ -53,6 +53,6 @@ public class DeleteCommandTest {
     @Test
     void execute_invalidIndex_throwsException() {
         DeleteCommand command = new DeleteCommand(5);
-        assertThrows(ModuleSyncException.class, () -> command.execute(moduleBook, stubStorage, stubUi));
+        assertThrows(AssertionError.class, () -> command.execute(moduleBook, stubStorage, stubUi));
     }
 }

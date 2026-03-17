@@ -9,11 +9,15 @@ public class Deadline extends Task {
 
     public Deadline(String moduleCode, String description, LocalDateTime by) {
         super(moduleCode, description, false);
+        assert description != null && !description.trim().isEmpty() : "Description cannot be null or empty";
+        assert by != null : "Deadline date cannot be null";
         this.by = by;
     }
 
     public Deadline(String moduleCode, String description, boolean isDone, LocalDateTime by) {
         super(moduleCode, description, isDone);
+        assert description != null && !description.trim().isEmpty() : "Description cannot be null or empty";
+        assert by != null : "Deadline date cannot be null";
         this.by = by;
     }
 

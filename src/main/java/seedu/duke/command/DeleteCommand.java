@@ -15,6 +15,9 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(ModuleBook moduleBook, Storage storage, Ui ui) throws ModuleSyncException {
+        assert displayIndex > 0 : "Display index must be strictly positive";
+        assert displayIndex <= moduleBook.totalTaskCount() : "Display index out of bounds";
+        
         Task deletedTask = moduleBook.removeTaskByDisplayIndex(displayIndex);
         storage.save(moduleBook);
         ui.showTaskDeleted(deletedTask, moduleBook.totalTaskCount());
