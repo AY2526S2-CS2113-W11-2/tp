@@ -55,6 +55,29 @@ public class Ui {
         }
     }
 
+    public void showTaskList(ModuleBook moduleBook, String moduleCode) {
+        Module module = moduleBook.getModule(moduleCode);
+
+        if (module == null) {
+            System.out.println("No such module: " + moduleCode.toUpperCase() + ".");
+            return;
+        }
+
+        if (module.getTasks().size() == 0) {
+            System.out.println("No tasks found for module " + module.getCode() + ".");
+            return;
+        }
+
+        System.out.println("Here are the tasks for " + module.getCode() + ":");
+
+        int taskNumber = 1;
+
+        for (Task task : module.getTasks().asUnmodifiableList()) {
+            System.out.println(task.formatForList(taskNumber));
+            taskNumber++;
+        }
+    }
+
     public void showTaskMarked(Task task, int taskNumber) {
         System.out.println("Nice! I've marked this task as done:");
         System.out.println("  " + task.formatForList(taskNumber));

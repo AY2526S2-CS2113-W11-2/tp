@@ -26,8 +26,8 @@ public class Parser {
         if (trimmed.toLowerCase().startsWith("add")) {
             return parseAdd(trimmed);
         }
-        if (trimmed.equalsIgnoreCase("list")) {
-            return new ListCommand();
+        if (trimmed.toLowerCase().startsWith("list")) {
+            return parseList(trimmed);
         }
         if (trimmed.toLowerCase().startsWith("mark")) {
             return parseMark(trimmed);
@@ -96,6 +96,45 @@ public class Parser {
 
         assert module != null && task != null : "Add todo command requires parsed module and task";
         return new AddTodoCommand(module, task);
+    }
+
+    private Command parseList(String input) throws ModuleSyncException {
+        String remainder;
+
+        if (input.length() > 4) {
+            remainder = input.substring(4).trim();
+        } else {
+            remainder = "";
+        }
+
+        if (remainder.isEmpty()) {
+            return new ListCommand();
+        }
+
+        String[] splited = remainder.split("/");
+        String moduleCode = null;
+
+        for (String part : splited) {
+            String trimmedToken = part.trim();
+
+            if (trimmedToken.isEmpty()) {
+                continue;
+            }
+
+            String lowerCaseToken = trimmedToken.toLowerCase();
+
+            if (lowerCaseToken.startsWith("mod ")) {
+                moduleCode = trimmedToken.substring(4).trim();
+            } else {
+                throw new ModuleSyncException("Usage: list or list /mod MODULE_CODE");
+            }
+        }
+
+        if (moduleCode == null || moduleCode.isEmpty()) {
+            throw new ModuleSyncException("Usage: list or list /mod MODULE_CODE");
+        }
+
+        return new ListCommand(moduleCode);
     }
 
     private Command parseMark(String input) throws ModuleSyncException {

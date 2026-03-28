@@ -24,6 +24,15 @@ public class ModuleBook {
                 .sum();
     }
 
+    public Module getModule(String code) {
+        if (code == null) {
+            return null;
+        }
+
+        String upperCaseCode = code.toUpperCase();
+        return modules.get(upperCaseCode);
+    }
+
     public Task getTaskByDisplayIndex(int displayIndex) throws ModuleSyncException {
         if (displayIndex <= 0) {
             throw new ModuleSyncException("Task number must be a positive integer.");
